@@ -8,12 +8,12 @@ import orderRouter from "./orders/orderRouter";
 import stripeRouter from "./stripe/stripe";
 
 const app = express();
-app.use("/api/stripe", stripeRouter);
 app.use(
     cors({
         origin: ["http://localhost:5173", "http://localhost:3000"],
     })
 );
+app.use("/api/stripe", stripeRouter);
 
 app.use(express.json());
 
