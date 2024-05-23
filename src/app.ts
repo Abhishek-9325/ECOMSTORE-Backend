@@ -15,7 +15,15 @@ app.use(
     })
 );
 
-app.use(express.json());
+app.use(
+    express.json({
+        verify: (req: any, res, buf) => {
+            if (req.originalUrl.startsWith("/api/stripe/webhook")) {
+                req.rawBody = buf.toString();
+            }
+        },
+    })
+);
 
 // Routes
 // Http methods: GET, POST, PUT, PATCH, DELETE
