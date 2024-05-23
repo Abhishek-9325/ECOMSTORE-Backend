@@ -12,7 +12,7 @@ app.use(
     cors({
         origin: [
             "http://localhost:5173",
-            "https://ecomstore-frontend.vercel.app/",
+            "https://ecomstore-frontend.vercel.app",
         ],
     })
 );
