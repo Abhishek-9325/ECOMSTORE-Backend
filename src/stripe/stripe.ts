@@ -57,7 +57,7 @@ const endpointSecret = process.env.ENDPOINT_SECRET;
 stripeRouter.post(
     "/webhook",
     express.raw({ type: "application/json" }),
-    async (request, response) => {
+    async (request: any, response) => {
         console.log("webhook called");
         const sig = request.headers["stripe-signature"];
 
@@ -65,7 +65,7 @@ stripeRouter.post(
 
         try {
             event = stripe.webhooks.constructEvent(
-                request.body,
+                request.rawBody,
                 sig,
                 endpointSecret
             );
