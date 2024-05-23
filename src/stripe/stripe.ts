@@ -68,7 +68,7 @@ stripeRouter.post(
         try {
             console.log("Entered try block");
             event = stripe.webhooks.constructEvent(
-                request,
+                request.body,
                 sig,
                 endpointSecret
             );
