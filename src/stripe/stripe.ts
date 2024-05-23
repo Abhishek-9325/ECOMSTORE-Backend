@@ -52,47 +52,49 @@ stripeRouter.post(
     }
 );
 
-// const endpointSecret = process.env.ENDPOINT_SECRET;
+const endpointSecret = process.env.ENDPOINT_SECRET;
 
-// stripeRouter.post(
-//     "/webhook",
-//     express.raw({ type: "application/json" }),
-//     async (request, response) => {
-//         const sig = request.headers["stripe-signature"];
+stripeRouter.post(
+    "/webhook",
+    express.raw({ type: "application/json" }),
+    async (request, response) => {
+        console.log("webhook called");
+        const sig = request.headers["stripe-signature"];
 
-//         let event;
+        let event;
 
-//         try {
-//             event = stripe.webhooks.constructEvent(
-//                 request.body,
-//                 sig,
-//                 endpointSecret
-//             );
-//         } catch (err: any) {
-//             response.status(400).send(`Webhook Error: ${err.message}`);
-//             return;
-//         }
+        try {
+            event = stripe.webhooks.constructEvent(
+                request.body,
+                sig,
+                endpointSecret
+            );
+            console.log("event", event);
+        } catch (err: any) {
+            response.status(400).send(`Webhook Error: ${err.message}`);
+            return;
+        }
 
-//         // Handle the event
-//         switch (event.type) {
-//             case "payment_intent.succeeded":
-//                 const paymentIntentSucceeded = event.data.object;
-//                 console.log("event object", paymentIntentSucceeded);
-//                 // const order = await Order.findById(
-//                 //   paymentIntentSucceeded.metadata.orderId
-//                 // );
-//                 // order.paymentStatus = 'received';
-//                 // await order.save();
+        // Handle the event
+        switch (event.type) {
+            case "payment_intent.succeeded":
+                const paymentIntentSucceeded = event.data.object;
+                console.log("event object", paymentIntentSucceeded);
+                // const order = await Order.findById(
+                //   paymentIntentSucceeded.metadata.orderId
+                // );
+                // order.paymentStatus = 'received';
+                // await order.save();
 
-//                 break;
-//             // ... handle other event types
-//             default:
-//                 console.log(`Unhandled event type ${event.type}`);
-//         }
+                break;
+            // ... handle other event types
+            default:
+                console.log(`Unhandled event type ${event.type}`);
+        }
 
-//         // Return a 200 response to acknowledge receipt of the event
-//         response.send();
-//     }
-// );
+        // Return a 200 response to acknowledge receipt of the event
+        response.send();
+    }
+);
 
 export default stripeRouter;
