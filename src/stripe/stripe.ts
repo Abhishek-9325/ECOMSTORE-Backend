@@ -10,6 +10,7 @@ const calculateOrderAmount = (item: Product) => {
 
 stripeRouter.post(
     "/create-checkout-session",
+    express.json(),
     async (req: Request, res: Response) => {
         try {
             if (!req.body.products) {
