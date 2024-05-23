@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { Product } from "../product/productTypes";
 import { config } from "../config/config";
+const bodyParser = require("body-parser");
 const stripeRouter = express.Router();
 const stripe = require("stripe")(config.stripeSecretKey);
 const calculateOrderAmount = (item: Product) => {
@@ -56,16 +57,18 @@ const endpointSecret = process.env.ENDPOINT_SECRET;
 
 stripeRouter.post(
     "/webhook",
-    express.raw({ type: "application/json" }),
-    async (request: any, response) => {
+    bodyParser.raw({ type: "application/json" }),
+    async (request, response) => {
         console.log("webhook called");
+        console.log(request.body);
         const sig = request.headers["stripe-signature"];
 
         let event;
 
         try {
+            console.log("Entered try block");
             event = stripe.webhooks.constructEvent(
-                request.rawBody,
+                request,
                 sig,
                 endpointSecret
             );
