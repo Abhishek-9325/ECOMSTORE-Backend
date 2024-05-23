@@ -4,6 +4,8 @@ import globalErrorHandler from "./middlewares/globalErrorHandler";
 import userRouter from "./user/userRouter";
 import categoryRouter from "./category/categoryRouter";
 import productRouter from "./product/productRouter";
+import orderRouter from "./orders/orderRouter";
+import stripeRouter from "./stripe/stripe";
 
 const app = express();
 
@@ -24,6 +26,8 @@ app.get("/", (req, res, next) => {
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/categories", categoryRouter);
+app.use("/api/orders", orderRouter);
+app.use("/api/stripe", stripeRouter);
 
 // Global error handler
 app.use(globalErrorHandler);

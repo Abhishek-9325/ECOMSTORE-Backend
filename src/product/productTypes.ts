@@ -9,4 +9,5 @@ export interface Product {
     price: string;
     createdAt: Date;
     updatedAt: Date;
+    quantity: Number;
 }
