@@ -58,7 +58,7 @@ const endpointSecret = process.env.ENDPOINT_SECRET;
 
 stripeRouter.post(
     "/webhook",
-    bodyParser.raw({ type: "application/json" }),
+    express.raw({ type: "application/json" }),
     async (request, response) => {
         console.log("webhook called");
         console.log(request.body);
