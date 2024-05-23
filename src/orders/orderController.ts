@@ -1,9 +1,5 @@
-import path from "node:path";
-import fs from "node:fs";
 import { Request, Response, NextFunction } from "express";
-import cloudinary from "../config/cloudinary";
 import createHttpError from "http-errors";
-import productModel from "./orderModel";
 import orderModel from "./orderModel";
 
 const createOrder = async (req: Request, res: Response, next: NextFunction) => {
